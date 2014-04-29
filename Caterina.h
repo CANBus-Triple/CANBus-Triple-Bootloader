@@ -64,7 +64,7 @@
 		#define BOOTLOADER_HWVERSION_MINOR   0x00
 
 		/** Eight character bootloader firmware identifier reported to the host when requested */
-		#define SOFTWARE_IDENTIFIER          "CANBusTrip"
+		#define SOFTWARE_IDENTIFIER          "CANBusT"
 		
 		#define CPU_PRESCALE(n)	(CLKPR = 0x80, CLKPR = (n))
 		#define LED_SETUP()		DDRD |= (1<<7); DDRB |= (1<<0); DDRD |= (1<<5);

@@ -411,8 +411,10 @@ static void ReadWriteMemoryBlock(const uint8_t Command)
 static uint8_t FetchNextCommandByte(void)
 {
     
-    if(isUART)
+    if(isUART){
+        while( Serial_IsCharReceived() == false ){} // Wait for data
         return (uint8_t)Serial_ReceiveByte();
+    }
     
 	/* Select the OUT endpoint so that the next data byte can be read */
 	Endpoint_SelectEndpoint(CDC_RX_EPNUM);
