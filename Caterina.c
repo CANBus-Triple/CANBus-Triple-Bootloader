@@ -65,7 +65,7 @@ uint16_t TxLEDPulse = 0; // time remaining for Tx LED pulse
 uint16_t RxLEDPulse = 0; // time remaining for Rx LED pulse
 
 /* Bootloader timeout timer */
-#define TIMEOUT_PERIOD	1000*22
+#define TIMEOUT_PERIOD	1000*8
 uint16_t Timeout = 0;
 
 uint16_t bootKey = 0x7777;
@@ -127,11 +127,11 @@ int main(void)
 	
 	if (mcusr_state & (1<<EXTRF)) {
 		// External reset -  we should continue to self-programming mode.
-	} else if (mcusr_state == (1<<PORF) && pgm_read_word(0) != 0xFFFF) {		
+	} else if ((mcusr_state & (1<<PORF)) && (pgm_read_word(0) != 0xFFFF)){
 		// After a power-on reset skip the bootloader and jump straight to sketch 
-		// if one exists.	
+		// if one exists.
 		StartSketch();
-	} else if ((mcusr_state == (1<<WDRF)) && (bootKeyPtrVal != bootKey) && (pgm_read_word(0) != 0xFFFF)) {	
+	} else if ((mcusr_state & (1<<WDRF)) && (bootKeyPtrVal != bootKey) && (pgm_read_word(0) != 0xFFFF)) {
 		// If it looks like an "accidental" watchdog reset then start the sketch.
 		StartSketch();
 	}
@@ -345,6 +345,8 @@ static void ReadWriteMemoryBlock(const uint8_t Command)
 	}
 	else
 	{
+        // Write to Flash
+        
 		uint32_t PageStartAddress = CurrAddress;
 
 		if (MemoryType == 'F')

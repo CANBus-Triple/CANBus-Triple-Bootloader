@@ -1,3 +1,4 @@
  cd /Applications/Arduino.app/Contents/Resources/Java/hardware/tools/avr/bin
 
 ./avrdude -C ../etc/avrdude.conf -c arduino -p m32u4 -P /dev/tty.usbmodem12341 -v -v -U lfuse:w:0xbf:m -U hfuse:w:0xd8:m -U efuse:w:0xf3:m -U flash:w:/Users/etx/Dropbox/Projects/CANBusTriple/Bootloader/Caterina.hex
+

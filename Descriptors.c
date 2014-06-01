@@ -192,10 +192,8 @@ const USB_Descriptor_String_t LanguageString =
 const USB_Descriptor_String_t ProductString =
 {
 	.Header                 = {.Size = USB_STRING_LEN(16), .Type = DTYPE_String},
-
-    // Switching to 8036 so that arduino usb serial drivers will work
-    // #if DEVICE_PID == 0x0036
-	#if DEVICE_PID == 0x8036
+    
+	#if DEVICE_PID == 0x0036
 	.UnicodeString          = L"CANBus Triple   "
 	#else
 	.UnicodeString			= L"USB IO board    "
