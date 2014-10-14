@@ -122,9 +122,18 @@ int main(void)
 	uint8_t  mcusr_state = MCUSR;		// store the initial state of the Status register
 	MCUSR = 0;							// clear all reset flags	
 
+    /* Disable clock division */
+    clock_prescale_set(clock_div_1);
+    CPU_PRESCALE(0);
+    
+    /* CANBus Triple Power LED on */
+    DDRE |= 0x04;  // B00000100;
+    PORTE |= 0x04;
+    
 	/* Watchdog may be configured with a 15 ms period so must disable it before going any further */
 	wdt_disable();
-	
+    
+    
 	if (mcusr_state & (1<<EXTRF)) {
 		// External reset -  we should continue to self-programming mode.
 	} else if ((mcusr_state & (1<<PORF)) && (pgm_read_word(0) != 0xFFFF)){
@@ -136,8 +145,10 @@ int main(void)
 		StartSketch();
 	}
 	
-	/* Setup hardware required for the bootloader */
-	SetupHardware();
+    
+    /* Setup hardware required for the bootloader */
+    SetupHardware();
+	
 
 	/* Enable global interrupts so that the USB stack can function */
 	sei();
@@ -175,14 +186,14 @@ void SetupHardware(void)
 	wdt_disable();
 
 	/* Disable clock division */
-	clock_prescale_set(clock_div_1);
+	// clock_prescale_set(clock_div_1);
 
 	/* Relocate the interrupt vector table to the bootloader section */
 	MCUCR = (1 << IVCE);
 	MCUCR = (1 << IVSEL);
 	
 	LED_SETUP();
-	CPU_PRESCALE(0); 
+	// CPU_PRESCALE(0);
 	L_LED_OFF();
 	TX_LED_OFF();
 	RX_LED_OFF();

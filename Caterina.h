@@ -75,9 +75,9 @@
          #define L_LED_ON()		PORTE |= (1<<6)
          #define L_LED_TOGGLE()	PORTE ^= (1<<6)
         */
-        #define L_LED_OFF()		PORTD &= ~(1<<7)
-		#define L_LED_ON()		PORTD |= (1<<7)
-		#define L_LED_TOGGLE()	PORTD ^= (1<<7)
+        #define L_LED_OFF()		PORTC &= ~(1<<7)
+		#define L_LED_ON()		PORTC |= (1<<7)
+		#define L_LED_TOGGLE()	PORTC ^= (1<<7)
 
         /*
         // Disable RX and TX led as we're actually using these for something else.
